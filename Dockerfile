@@ -1,8 +1,15 @@
-FROM node:8.9-alpine
-ENV NODE_ENV production
-WORKDIR /usr/src/app
-COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
-RUN npm install --production --silent && mv node_modules ../
-COPY . .
-EXPOSE 3000
-CMD node src/app.js
+FROM node:10-alpine
+# Define working directory
+WORKDIR /node-app
+# Install deps for production only
+COPY ./package*.json ./
+RUN npm install --production && \
+  npm cache clean --force
+COPY ./src ./src
+# Set system environments
+ENV NODE_ENV=production
+ENV PORT=3000
+# Expose ports (for orchestrators and dynamic reverse proxies)
+EXPOSE ${PORT}
+# Start the app
+CMD ["npm", "start"]
