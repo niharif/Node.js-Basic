@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
   res.render('index', {
-    name: "Patcharapon Mondee",
+    name: "NIHARIF BAHA",
     pets: ["Stamp", "Snow"]
   });
 });
